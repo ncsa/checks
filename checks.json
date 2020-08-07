@@ -1,0 +1,28 @@
+[
+    {
+        "function": "checks.check_rabbitmq",
+        "parameters": {
+            "rabbitmq_uri": "RABBITMQ_URI"
+        }
+    },
+    {
+        "function": "checks.check_mongo",
+        "parameters": {
+            "mongo_uri": "MONGO_URI"
+        }
+    },
+    {
+        "function": "checks.check_url",
+        "parameters": {
+            "url": "URL",
+            "text": "URL_TEXT"
+        }
+    },
+    {
+        "function": "checks.check_postgresql",
+        "parameters": {
+            "pg_uri": "PG_URI",
+            "pg_table": "PG_TABLE"
+        }
+    }
+]
