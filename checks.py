@@ -56,7 +56,7 @@ def check_url(url, text=None):
 
 
 # ----------------------------------------------------------------------
-# RABBITMQ
+# POSTGRESQL
 # ----------------------------------------------------------------------
 def check_postgresql(pg_uri=None, pg_table=None):
     connection = None
