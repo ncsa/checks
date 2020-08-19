@@ -25,18 +25,16 @@ spec:
     spec:
       initContainers:
         - name: check-rabbitmq
-          image: "ncsa/check:1.0.0"
+          image: "ncsa/checks:1.0.0"
           env:
             - name: RABBITMQ_URI
               value: "amqp://user:pass@rabbitmq/%2F"
         - name: check-postgresql
-          image: "ncsa/check:1.0.0"
+          image: "ncsa/checks:1.0.0"
           env:
-            - name: PGHOST
-              value: "postgres"
-            - name: PGUSER
-              value: "postgres"
-            - name: PGTABLE
+            - name: PG_URI
+              value: "postgresql://postgres:secret@postgresql:5432/mydb"
+            - name: PG_TABLE
               value: "users"
       containers:
         - name: mywebapp
@@ -81,7 +79,7 @@ PostgreSQL
 - exit code : 4
 - parameters
   - PG_URI [required*] : URI to connect to postgresql.
-  - PGTABLE [optional] : table that should exist 
+  - PG_TABLE [optional] : table that should exist 
 
 ## Version History
 
