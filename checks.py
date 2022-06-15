@@ -34,24 +34,20 @@ def check_mongo(mongo_uri):
 # ----------------------------------------------------------------------
 # URL
 # ----------------------------------------------------------------------
-def check_url(url, text=None):
-    response = urllib.request.urlopen(url)
-    if response.code >= 200 or response <= 299:
-        print("Connected to URL ", url)
-        if text:
-            for line in response.readlines():
-                if text in line.decode("utf-8"):
-                    print(line)
-                    response.close()
-                    print(f"Text '{text}' found in response.")
-                    return True
-            response.close()
-            print(f"Text '{text}' not found in response.")
+def check_url(url: str, text: str = None) -> bool:
+    print(f"Verifying connectivity to URL: {url}")
+    with urllib.request.urlopen(url) as res:
+        print(f"  Response code: {res.code}")
+        if not (200 <= res.code < 300):
             return False
-        else:
-            response.close()
+        print("  Connected successfully.")
+        if not text:
             return True
-    response.close()
+        print(f"  Searching in response for sentinel text: {text}")
+        for line_no, line in enumerate(res.readlines(), start=1):
+            if text in line.decode():
+                print(f"    Sentinel text found on response line {line_no}:\n  {line}")
+                return True
     return False
 
 
