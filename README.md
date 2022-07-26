@@ -32,9 +32,9 @@ spec:
         - name: check-postgresql
           image: "ncsa/checks:1.0.0"
           env:
-            - name: PG_URI
+            - name: PGURI
               value: "postgresql://postgres:secret@postgresql:5432/mydb"
-            - name: PG_TABLE
+            - name: PGTABLE
               value: "users"
       containers:
         - name: mywebapp
@@ -78,24 +78,18 @@ PostgreSQL
   if the optional table exists
 - exit code : 4
 - parameters
-  - PG_URI [required*] : URI to connect to postgresql.
-  - PG_TABLE [optional] : table that should exist 
+  - PGURI [required*] : URI to connect to postgresql.
+  - PGUSER [required*] : 
+  - PGPASSWORD [required*] : 
+  - PGHOST [required*] : 
+  - PGPORT [required*] : 
+  - PGDATABASE [required*] : 
+  - PGTABLE [optional] : table that should exist 
 
-## Version History
-
-### 1.0 - 2020-08-07
-
-#### Added
-- support for RabbitMQ
-- support for MongoDB
-- support for URL
-- support for PostgreSQL
-
+* either PG_URI or on of the PG* should be provided. 
 
 ## TODO:
 
-check_postgres: support for standard postgresql parameters
-check_service: check if host:port is reachable
-
-create simple tests for each check
-github actions
+- check_service: check if host:port is reachable
+- create simple tests for each check
+- add db/collection for mongo to test access

@@ -19,7 +19,7 @@ def main():
 
     for exit_code, check in enumerate(checks, start=1):
         args = dict()
-        for key, env in check['parameters'].items():
+        for env, key in check['parameters'].items():
             v = os.getenv(env)
             if v:
                 args[key] = v

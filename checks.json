@@ -2,27 +2,34 @@
     {
         "function": "checks.check_rabbitmq",
         "parameters": {
-            "rabbitmq_uri": "RABBITMQ_URI"
+            "RABBITMQ_URI": "rabbitmq_uri"
         }
     },
     {
         "function": "checks.check_mongo",
         "parameters": {
-            "mongo_uri": "MONGO_URI"
+            "MONGO_URI": "mongo_uri"
         }
     },
     {
         "function": "checks.check_url",
         "parameters": {
-            "url": "URL",
-            "text": "URL_TEXT"
+            "URL": "url",
+            "URL_TEXT": "text"
         }
     },
     {
         "function": "checks.check_postgresql",
         "parameters": {
-            "pg_uri": "PG_URI",
-            "pg_table": "PG_TABLE"
+            "PGURI":"dsn",
+            "PG_URI":"dsn",
+            "PGUSER": "user",
+            "PGPASSWORD": "password",
+            "PGHOST": "host",
+            "PGPORT": "port",
+            "PGDATABASE": "dbname",
+            "PGTABLE": "table",
+            "PG_TABLE": "table"
         }
     }
 ]
