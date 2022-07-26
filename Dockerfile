@@ -1,24 +1,29 @@
-# ------------------------------------------------------------
-# create requirements.txt
-# ------------------------------------------------------------
-FROM python:3 AS pipenv
-RUN pip install pipenv
-COPY Pipfile* /tmp/
-RUN cd /tmp && pipenv lock --requirements > requirements.txt
-
-# ------------------------------------------------------------
-# build actual container
-# ------------------------------------------------------------
-FROM python:3-slim
+FROM python:3.8-slim
 
 ENV TRIES=0 \
     RABBITMQ_URI="" \
     MONGO_URI="" \
+    PGURI="" \
+    PGHUSER="" \
+    PGPASSWORD="" \
+    PGHOST="" \
+    PGPORT="" \
+    PGDATABASE="" \
+    PGTABLE="" \
     URL=""
+
+ARG VERSION="unknown"
+ARG GITSHA1="unknown"
+
+LABEL org.opencontainers.image.title="Container to be used as init containers to check if the service is ready"
+LABEL org.opencontainers.image.authors="Rob Kooper <kooper@illinois.edu"
+LABEL org.opencontainers.image.source="https://github.com/ncsa/checks"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.revision="${GITSHA1}"
 
 # Install requirements
 WORKDIR /usr/src
-COPY --from=pipenv /tmp/requirements.txt /usr/src/
+COPY requirements.txt /usr/src/
 RUN pip install -r /usr/src/requirements.txt
 
 # Copy application
