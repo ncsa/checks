@@ -9,6 +9,7 @@ import pymongo
 # RABBITMQ
 # ----------------------------------------------------------------------
 def check_rabbitmq(rabbitmq_uri):
+    print(f"Verifying connectivity to RABBITMQ: {rabbitmq_uri}")
     params = pika.URLParameters(rabbitmq_uri)
     connection = pika.BlockingConnection(params)
     if connection.is_open:
@@ -26,6 +27,7 @@ def check_mongo(mongo_uri):
                                  connectTimeoutMS=1000,
                                  socketTimeoutMS=1000,
                                  serverSelectionTimeoutMS=1000)
+    print(f"Verifying connectivity to MONGO: {mongo_uri}")
     result = client.admin.command('ismaster')
     print("Connected to Mongo, master = ", result)
     return True
@@ -54,26 +56,33 @@ def check_url(url: str, text: str = None) -> bool:
 # ----------------------------------------------------------------------
 # POSTGRESQL
 # ----------------------------------------------------------------------
-def check_postgresql(pg_uri=None, pg_table=None):
-    connection = None
-    if pg_uri:
-        connection = psycopg2.connect(pg_uri)
+def check_postgresql(**kwargs):
+    if 'pguri' in kwargs:
+        print(f"Verifying connectivity to PostgreSQL: {kwargs['pguri']}")
+    elif 'pghost' in kwargs:
+        print(f"Verifying connectivity to PostgreSQL: {kwargs['pghost']}")
     else:
-        exit(4)
+        print(f"Verifying connectivity to PostgreSQL: localhost")
+    if 'dbname' not in kwargs:
+        check_table = True
+        kwargs['dbname'] = 'postgres'
+    table = kwargs.pop('table', None)
+    connection = psycopg2.connect(**kwargs, connect_timeout=1)
     if not connection:
         return False
     cursor = connection.cursor()
     print("Connected to database")
-    if pg_table:
-        cursor.execute('SELECT count(*) FROM "%s";' % pg_table)
+    if table:
+        cursor.execute('SELECT count(*) FROM "%s";' % table)
         row = cursor.fetchone()
         cursor.close()
         connection.close()
         if row:
-            print("Found %d rows in table %s." % (row[0], pg_table))
+            print("Found %d rows in table %s." % (row[0], table))
             return True
         else:
-            print("Did not find table %s." % pg_table)
+            print("Did not find table %s." % table)
+            return False
     else:
         cursor.close()
         connection.close()
