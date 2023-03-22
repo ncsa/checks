@@ -1,5 +1,9 @@
 FROM python:3.8-slim
 
+# We are going to build the postgres psycopg2 library from source
+# so we need postgres binaries and gcc
+RUN apt-get update && apt-get install -y libpq-dev build-essential
+
 ENV TRIES=0 \
     RABBITMQ_URI="" \
     MONGO_URI="" \
