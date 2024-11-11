@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:3.11-slim
 
 ENV TRIES=0 \
     RABBITMQ_URI="" \
@@ -11,15 +11,6 @@ ENV TRIES=0 \
     PGDATABASE="" \
     PGTABLE="" \
     URL=""
-
-ARG VERSION="unknown"
-ARG GITSHA1="unknown"
-
-LABEL org.opencontainers.image.title="Container to be used as init containers to check if the service is ready"
-LABEL org.opencontainers.image.authors="Rob Kooper <kooper@illinois.edu"
-LABEL org.opencontainers.image.source="https://github.com/ncsa/checks"
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.revision="${GITSHA1}"
 
 # Install requirements
 WORKDIR /usr/src
