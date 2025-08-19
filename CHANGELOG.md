@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
-### 1.1.1 - 2025-08-18
+
+## 1.1.1 - 2025-08-18
 
 ### Changed
 - Update psycopg2-binary to 2.9.10
